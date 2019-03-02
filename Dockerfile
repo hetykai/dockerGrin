@@ -1,8 +1,8 @@
-FROM alpine:edge as builder
+FROM alpine as builder
 ARG VERSION=v1.0.2
 ENV CLONE_URL https://github.com/mimblewimble/grin.git
 WORKDIR /src
-RUN apk update && apk --no-cache add git cargo rust ncurses-dev zlib-dev llvm-dev openssl-dev linux-headers pkgconfig clang-dev && git clone $CLONE_URL -b $VERSION . && cargo build --release 
+RUN apk update && apk --no-cache add git cargo rust ncurses-dev zlib-dev llvm-dev libressl-dev linux-headers pkgconfig clang-dev && git clone $CLONE_URL -b $VERSION . && cargo build --release 
 
 FROM alpine
 RUN apk --no-cache add ncurses libgcc
