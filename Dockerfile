@@ -4,8 +4,8 @@ ENV CLONE_URL https://github.com/mimblewimble/grin.git
 WORKDIR /src
 RUN apk update && apk --no-cache add git cargo rust ncurses-dev zlib-dev llvm-dev openssl-dev linux-headers pkgconfig clang-dev && git clone $CLONE_URL -b $VERSION . && cargo build --release 
 
-FROM alpine:latest
-RUN apk update && apk --no-cache add ncurses libgcc
+FROM alpine
+RUN apk --no-cache add ncurses libgcc
 COPY --from=builder /src/target/release/grin /usr/local/bin/grin
 WORKDIR /root/.grin
 RUN grin server config && sed -i -e 's/run_tui = true/run_tui = false/' grin-server.toml
